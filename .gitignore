@@ -2,3 +2,7 @@ node_modules/
 .pnpm-store/
 .antigravitycli/                                                         
 .gemini
+
+# AI Progress (individual student files)
+.ai_progress/*
+!.ai_progress/.gitkeep
