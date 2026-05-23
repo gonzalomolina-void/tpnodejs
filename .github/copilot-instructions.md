@@ -1,4 +1,4 @@
-# Cursor Rules
+# GitHub Copilot Instructions
 # Please read and strictly follow the system instructions and guidelines defined in the AI.md file.
 # Por favor, lee y seguí estrictamente las instrucciones del sistema definidas en el archivo AI.md.
 
