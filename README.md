@@ -60,7 +60,7 @@ tpnodejs/
  ├── public/             # Archivos estáticos (HTML, CSS, JS del Frontend) [Fase 2]
  ├── scripts/            # Scripts auxiliares (copia con Streams) [Fase 5]
  ├── AI.md               # Instrucciones globales para los asistentes de IA
- ├── server.js           # Código del servidor HTTP nativo
+ ├── server.js           # Código del servidor HTTP nativo [A ser creado en Fase 1]
  ├── package.json        # Configuración del proyecto y dependencias de desarrollo
  └── README.md           # Este archivo
 ```
@@ -71,10 +71,11 @@ tpnodejs/
 
 1. Clonar el repositorio.
 2. Asegurarse de tener instalado `pnpm`.
-3. Ejecutar el servidor:
+3. Crear e implementar el archivo `server.js` (siguiendo las consignas de la **Fase 1**).
+4. Ejecutar el servidor:
    ```bash
    node server.js
    ```
-4. Abrir en el navegador:
+5. Abrir en el navegador:
    - `http://localhost:3000/health` (Para verificar el estado)
    - `http://localhost:3000/api/characters` (Para interactuar con la API)
