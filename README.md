@@ -30,9 +30,23 @@ El estudiante es quien realiza la investigación, toma las decisiones de diseño
 
 Para que cualquier estudiante pueda clonar este repositorio y continuar el aprendizaje guiado por la IA de su preferencia (Cursor, Claude Code, GitHub Copilot, Aider, OpenCode, Gemini, etc.) sin perder el contexto de su avance, se configuró un sistema de persistencia agnóstico:
 
-- **[AI.md](file:///C:/Work/Uncoma/PWA/tpnodejs/AI.md)**: Define las instrucciones de comportamiento y rol del mentor para todas las IAs.
-- **Punteros de IA**: Archivos como `.cursorrules`, `.claudeprompt`, `.aider.instructions.md` y `.github/copilot-instructions.md` redirigen a los agentes a leer el archivo de reglas central.
+- **[AI.md](AI.md)**: Fuente canónica de instrucciones, comportamiento y rol del mentor para todas las IAs.
+- **Punteros de IA**: Archivos como `AGENTS.md`, `.cursorrules`, `.claudeprompt`, `.aider.instructions.md` y `.github/copilot-instructions.md` redirigen a los agentes a leer el archivo de reglas central.
 - **Carpeta `.ai_progress/`**: Contiene el archivo local `progress.md` que la IA lee al iniciar la sesión para recuperar el estado y actualiza al finalizar. Esta carpeta está en el `.gitignore` (excepto por el archivo `.gitkeep`), lo que permite que cada estudiante mantenga su progreso en su máquina local sin subirlo al repositorio compartido.
+
+---
+
+## 🧭 Protocolo de Arranque para cualquier IA
+
+Si abrís este proyecto con Codex CLI, Cursor, Claude, Aider, GitHub Copilot u otra herramienta, el asistente debe arrancar leyendo estos archivos en orden:
+
+1. `AI.md` — contrato pedagógico y reglas canónicas.
+2. `.ai_progress/progress.md` — fase actual, conceptos validados y próximos pasos.
+3. `docs/GuiaDeEstudio.md` — guía por fases para enseñar sin regalar la solución.
+4. `docs/TPIntroduccionNodeJS2026.md` — consigna formal del trabajo práctico.
+5. Código actual relevante, por ejemplo `server.js`.
+
+Regla central: la IA actúa como mentor. Debe explicar, preguntar, orientar y revisar; no resolver el TP completo con código listo para copiar y pegar.
 
 ---
 

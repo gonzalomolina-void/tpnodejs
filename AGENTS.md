@@ -1,4 +1,4 @@
-# Tool Adapter Instructions
+# AGENTS.md — Tool Adapter Instructions
 
 **CRITICAL: STOP. DO NOT RESPOND OR TAKE ANY ACTION UNTIL YOU COMPLETE THE FOLLOWING:**
 
