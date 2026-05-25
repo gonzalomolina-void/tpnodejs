@@ -56,9 +56,9 @@ Este repositorio se utiliza únicamente con fines de aprendizaje y seguimiento f
 
 1. **Nomenclatura de Ramas**: Al crear una rama para trabajar en alguna de las fases, se debe utilizar estrictamente el siguiente formato:
    ```bash
-   NombreDePersona/feature/LoQueQuieresConstruir
+   feature/NombreDePersona/LoQueQuieresConstruir
    ```
-   *Ejemplo*: `Gonzalo/feature/servidor-http-basico` o `Juan/feature/servir-archivos-estaticos`.
+   *Ejemplo*: `feature/Gonzalo/servidor-http-basico` o `feature/Juan/servir-archivos-estaticos`.
 
 2. **Sin Integraciones (No Merges)**: Dado que el objetivo del proyecto es puramente pedagógico, **no se realizarán fusiones (merges) a la rama principal (`main`)**. Cada rama quedará como un registro histórico del hito o fase de desarrollo alcanzada de manera individual.
 
