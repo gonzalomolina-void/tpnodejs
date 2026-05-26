@@ -23,17 +23,18 @@ export default function serveStaticFile(req, res) {
     }
 
     const stream = fs.createReadStream(filePath);
-    stream.on('error', () => {
-        errorResponse(res, 404, 'Not Found');
-    });
-    stream.on('data', (chunk) => {
-        res.write(chunk);
-    });
+
+    stream.on('error', () => {                                                                                                                                                                                                 
+        if (!res.headersSent) {                                                                                                                                                                                                
+            errorResponse(res, 404, 'Not Found');                                                                                                                                                                              
+        } else {                                                                                                                                                                                                               
+            res.end();                                                                                                                                                                                                         
+        }                                                                                                                                                                                                                      
+    });                                                                                                                                                                                                                        
+                                                                                                                                                                                                                               
     stream.on('open', () => {
-        res.writeHead(200, { 'Content-Type': `${mimeTypes[filename.split('.').pop()]}; charset=utf-8` || 'application/octet-stream' });
-        //stream.pipe(res);
-    });
-    stream.on('end', () => {
-        res.end();
-    });
+        const contentType = mimeTypes[filename.split('.').pop()] || 'application/octet-stream';                                                                                                                                                                                           
+        res.writeHead(200, { 'Content-Type': `${contentType}; charset=utf-8` });                                                                                                                                               
+        stream.pipe(res);                                                                                                                                                                                                      
+    }); 
 }

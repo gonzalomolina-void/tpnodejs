@@ -1,7 +1,7 @@
 const mimeTypes = {
     'html': 'text/html',
     'css': 'text/css',
-    'js': 'application/javascript',
+    'js': 'text/javascript',
     'json': 'application/json',
 };
 
