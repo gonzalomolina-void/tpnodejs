@@ -1,9 +1,13 @@
-import http from 'http';
-import https from 'https';
+import http from 'node:http';
+import fs from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import serveStaticFile from './static.js';
 
-const server = http.createServer((req, res) => {
+const server = http.createServer(async (req, res) => {
+    console.log(`Received request: ${req.method} ${req.url}`);
+
     switch (req.url) {
-        case '/':
+        case '/hello':
             res.writeHead(200, { 'Content-Type': 'text/plain' });
             res.end('Hello, World!');
             break;
@@ -16,8 +20,7 @@ const server = http.createServer((req, res) => {
             res.end(JSON.stringify([]));
             break;
         default:
-            res.writeHead(404, { 'Content-Type': 'text/plain' });
-            res.end('Not Found');
+            await serveStaticFile(req, res);
             break;
     }
 });
@@ -27,5 +30,3 @@ const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
-
-
