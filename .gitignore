@@ -4,5 +4,5 @@ node_modules/
 .gemini
 
 # AI Progress (individual student files)
-.ai_progress/*
+#.ai_progress/*
 !.ai_progress/.gitkeep
