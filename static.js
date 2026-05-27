@@ -1,7 +1,7 @@
 import { fileURLToPath } from 'node:url';
 import fs from 'node:fs';
 import mimeTypes from './mime-types.js';
-import errorResponse from './errorResponse.js';
+import {errorResponse} from './response.js';
 
 export default function serveStaticFile(req, res) {
     const filename = req.url === '/' ? '/index.html' : req.url;
