@@ -1,12 +1,11 @@
 info:
-  name: cards
-  description: Get all cards
+  name: Get Characters
   type: http
   seq: 1
 
 http:
   method: GET
-  url: https://69e8de2955d62f347979fc1c.mockapi.io/api/v1/cards
+  url: http://localhost:3000/api/characters
   auth: inherit
 
 settings:

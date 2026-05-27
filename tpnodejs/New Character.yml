@@ -1,0 +1,25 @@
+info:
+  name: New Character
+  type: http
+  seq: 3
+
+http:
+  method: POST
+  url: http://localhost:3000/api/characters
+  body:
+    type: json
+    data: |-
+      {
+        "name": "Darth Vader",
+        "race": "Human",
+        "role": "Dark Lord",
+        "level": 90,
+        "universe": "Star Wars"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
