@@ -1,9 +1,11 @@
 export function findRoute(routes, method, url) {
-    const regex = /^\/api\/characters\/\d+$/;
+    let route = routes.find(r => r.method === method && r.path === url);
 
-    if (regex.test(url)) {
-        return routes.find(r => r.method === method && r.path === '/api/characters/:id');
+    if (route) {
+        return route;
     }
 
-    return routes.find(r => r.method === method && r.path === url);
+    route = routes.find(r => r.method === method && r.regex && r.regex.test(url));
+
+    return route;   
 }

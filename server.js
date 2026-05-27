@@ -5,7 +5,7 @@ import serveStaticFile from './static.js';
 import { characters } from './data/characters.js';
 import { errorResponse, responseWithJson, response } from './response.js';
 import { findRoute } from './route.js';
-import { parseJson } from './utils.js';
+import { parseJson, newId, getIdFromUrl } from './utils.js';
 
 function helloHandler(req, res) {    
     response(res, 200, 'text/plain', 'Hello, World!');
@@ -20,7 +20,7 @@ function charactersHandler(req, res) {
 }
 
 function characterHandler(req, res) {
-    const id = req.url.split('/').pop();
+    const id = getIdFromUrl(req.url);
     const character = characters.find(c => c.id === id);
     
     if (character) {
@@ -28,13 +28,6 @@ function characterHandler(req, res) {
     } else {
         errorResponse(res, 404, 'Character not found');
     }
-}
-
-function newId() {
-    const maxId = characters.reduce((max, c) => Math.max(max, parseInt(c.id, 10)), 0);                                                                                                                       
-    const newId = String(maxId + 1);                                                                                                                                                                        
-    
-    return newId;
 }
 
 function insertCharacterHandler(req, res) {
@@ -52,14 +45,15 @@ function insertCharacterHandler(req, res) {
             return;
         }
 
-        character.id = newId();
+        character.id = newId(characters);
         characters.push(character);
         responseWithJson(res, 201, character);
     });
 }
 
 function updateCharacterHandler(req, res) {
-    const id = req.url.split('/').pop();
+    const id = getIdFromUrl(req.url);
+
     let body = '';
     req.on('data', chunk => {
         body += chunk.toString();
@@ -84,7 +78,7 @@ function updateCharacterHandler(req, res) {
 }
 
 function deleteCharacterHandler(req, res) {
-    const id = req.url.split('/').pop();
+    const id = getIdFromUrl(req.url);
     const index = characters.findIndex(c => c.id === id);
     if (index !== -1) {
         const deletedCharacter = characters.splice(index, 1);
@@ -98,10 +92,10 @@ const routes = [
     { method: 'GET', path: '/hello', handler: helloHandler },
     { method: 'GET', path: '/health', handler: healthHandler },
     { method: 'GET', path: '/api/characters', handler: charactersHandler },
-    { method: 'GET', path: '/api/characters/:id', handler: characterHandler }, 
+    { method: 'GET', path: '/api/characters/:id', handler: characterHandler, regex: /^\/api\/characters\/\d+$/ }, 
     { method: 'POST', path: '/api/characters', handler: insertCharacterHandler },
-    { method: 'PUT', path: '/api/characters/:id', handler: updateCharacterHandler },
-    { method: 'DELETE', path: '/api/characters/:id', handler: deleteCharacterHandler }
+    { method: 'PUT', path: '/api/characters/:id', handler: updateCharacterHandler, regex: /^\/api\/characters\/\d+$/ },
+    { method: 'DELETE', path: '/api/characters/:id', handler: deleteCharacterHandler, regex: /^\/api\/characters\/\d+$/ }
 ];
 
 const server = http.createServer(async (req, res) => {
