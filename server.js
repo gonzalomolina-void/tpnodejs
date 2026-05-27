@@ -3,21 +3,20 @@ import fs from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import serveStaticFile from './static.js';
 import { characters } from './data/characters.js';
-import errorResponse from './errorResponse.js';
+import { errorResponse, responseWithJson, response } from './response.js';
+import { findRoute } from './route.js';
+import { parseJson } from './utils.js';
 
-function helloHandler(req, res) {
-    res.writeHead(200, { 'Content-Type': 'text/plain' });
-    res.end('Hello, World!');
+function helloHandler(req, res) {    
+    response(res, 200, 'text/plain', 'Hello, World!');
 }
 
 function healthHandler(req, res) {
-    res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ status: 'ok' }));
+    responseWithJson(res, 200, { status: 'ok' });
 }
 
 function charactersHandler(req, res) {
-    res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify(characters));
+    responseWithJson(res, 200, characters);
 }
 
 function characterHandler(req, res) {
@@ -31,26 +30,11 @@ function characterHandler(req, res) {
     }
 }
 
-function findRoute(method, url) {
-    const regex = /^\/api\/characters\/\d+$/;
-
-    if (regex.test(url)) {
-        return routes.find(r => r.method === method && r.path === '/api/characters/:id');
-    }
-
-    return routes.find(r => r.method === method && r.path === url);
-}
-
 function newId() {
     const maxId = characters.reduce((max, c) => Math.max(max, parseInt(c.id, 10)), 0);                                                                                                                       
     const newId = String(maxId + 1);                                                                                                                                                                        
     
     return newId;
-}
-
-function responseWithJson(res, statusCode, data) {
-    res.writeHead(statusCode, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify(data));
 }
 
 function insertCharacterHandler(req, res) {
@@ -110,14 +94,6 @@ function deleteCharacterHandler(req, res) {
     }
 }
 
-function parseJson(body) {
-    try {
-        return JSON.parse(body);
-    } catch (error) {
-        return null;
-    }
-}
-
 const routes = [
     { method: 'GET', path: '/hello', handler: helloHandler },
     { method: 'GET', path: '/health', handler: healthHandler },
@@ -126,18 +102,18 @@ const routes = [
     { method: 'POST', path: '/api/characters', handler: insertCharacterHandler },
     { method: 'PUT', path: '/api/characters/:id', handler: updateCharacterHandler },
     { method: 'DELETE', path: '/api/characters/:id', handler: deleteCharacterHandler }
-]
+];
 
 const server = http.createServer(async (req, res) => {
     console.log(`Received request: ${req.method} ${req.url}`);
-    const route = findRoute(req.method, req.url);
+    const route = findRoute(routes, req.method, req.url);
+
     if (route) {
         await route.handler(req, res);
     } else {
         await serveStaticFile(req, res);
     }
 });
-
 
 const PORT = process.env.PORT || 3000;
 

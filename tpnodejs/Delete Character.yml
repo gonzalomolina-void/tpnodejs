@@ -8,7 +8,7 @@ http:
   url: http://localhost:3000/api/characters/:id
   params:
     - name: id
-      value: "26"
+      value: "10"
       type: path
   auth: inherit
 
